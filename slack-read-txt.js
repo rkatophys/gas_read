@@ -1,6 +1,7 @@
 function slackReadText() {
     var token = PropertiesService.getScriptProperties().getProperty("SLACK_TOKEN");
     var driveFolderId = PropertiesService.getScriptProperties().getProperty("DRIVE_ID");
+    var spreadSheetId = PropertiesService.getScriptProperties().getProperty("SPREAD_ID")
 
     var options = {
         method: 'GET',
@@ -9,7 +10,8 @@ function slackReadText() {
     channelApiUrl = "https://slack.com/api/conversations.list"
     var channelResponse = UrlFetchApp.fetch(channelApiUrl, options);
     var channelData = JSON.parse(channelResponse.getContentText());
-    var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets()
+    var spreadsheet = SpreadsheetApp.openById(spreadSheetId);
+    var sheets = spreadsheet.getSheets();
 
     // パブリックなチャンネルそれぞれのシートを作る。
     for (var i = 0; i < channelData.channels.length; i++) {
@@ -22,7 +24,7 @@ function slackReadText() {
             }
         }
         if (!hasSheetName) {
-            var newSheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+            var newSheet = spreadsheet.insertSheet();
             newSheet.setName(eachChannelData.name);
         }
     }
@@ -41,7 +43,7 @@ function slackReadText() {
     for (var i = 0; i < channelData.channels.length; i++) {
         var eachChannelData = channelData.channels[i];
         var eachChannel = eachChannelData.id
-        var eachSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(eachChannelData.name)
+        var eachSheet = spreadsheet.getSheetByName(eachChannelData.name)
         assignSheet(token, driveFolderId, eachChannel, eachSheet, allUserDataDict)
     }
 }
@@ -70,7 +72,6 @@ function assignSheet(token, driveFolderId, channel, sheet, allUserDataDict) {
     sheet.getRange("C2").setValue("全ファイルのフォルダ");
     var gurl = sheet.getRange("C3").setValue("https://drive.google.com/drive/u/0/folders/" + driveFolderId);
     gurl.setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP)
-
 
     var apiUrl = "https://slack.com/api/conversations.history?channel=" + channel + "&limit=10000";
     var options = {
@@ -196,5 +197,5 @@ function processMessage(message, token, driveFolderId, sheet, lastExecutionTime,
             }
         }
     }
-}
 
+}
