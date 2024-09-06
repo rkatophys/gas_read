@@ -1,0 +1,25 @@
+display_information:
+  name:  read_bot
+features:
+  bot_user:
+    display_name: read_bot
+    always_online: true
+oauth_config:
+  scopes:
+    bot:
+      - channels:history
+      - channels:read
+      - groups:read
+      - files:read
+      - users:read
+    user:
+      - channels:history
+      - channels:read
+      - groups:read
+      - files:read
+      - users:read
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  is_hosted: false
+  token_rotation_enabled: false
