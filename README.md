@@ -1,0 +1,2 @@
+# GAS read text
+GASを用いてSlackの公開チャンネルからテキストとファイルをGoogleスプレッドシートとGoogleドライブに保存する。
