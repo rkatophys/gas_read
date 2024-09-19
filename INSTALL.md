@@ -32,7 +32,7 @@ https://api.slack.com/apps を開いて、右上のCreate New Appをクリック
 
 ## GASの新規プロジェクトを作成。
 
-まずブラウザでグーグルアカウントにログインする。そして https://script.google.com/home を開く。そして、左上の新しいプロジェクトをクリックする。
+まずブラウザでグーグルアカウントにログインする。そして https://script.google.com/home を開き、左上の新しいプロジェクトをクリックする。
 
 <img src="images/inst6.png" width="400">
 
